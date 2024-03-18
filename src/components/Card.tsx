@@ -1,4 +1,8 @@
 import Play from "../assets/play.png";
+import Pause from "../assets/pause.png";
+import { useAudio } from "../utils/audioContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faHeartCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 interface CardProps {
   name: string;
@@ -8,23 +12,37 @@ interface CardProps {
 }
 
 export const Card = ({ className, name, image, preview_url }: CardProps) => {
-  const audio = new Audio(preview_url);
-  const toggle = () => {
-    audio.play();
+  const { isPlaying, play, currentPlayingUrl, favorites, toggleFavorite } =
+    useAudio();
+
+  const isCurrentPlaying = currentPlayingUrl === preview_url && isPlaying;
+  const isFavorited = favorites.includes(preview_url);
+
+  const togglePlay = () => {
+    play(preview_url);
   };
 
+  const toggleFavorites = () => {
+    toggleFavorite(preview_url);
+  };
   return (
     <div
       className={`${className} bg-[#343434] h-24 hover:shadow-md flex cursor-pointer max-w-md`}
     >
       <img className="h-full w-24" src={image} alt="Episode cover" />
       <div className="px-3 py-1 flex items-center justify-between w-full">
-        <div className="font-bold w-3/4">{name} </div>
+        <div className="font-bold w-3/4">{name}</div>
         <div
           className="rounded-full bg-green-500 w-10 h-10 flex justify-center items-center cursor-pointer"
-          onClick={toggle}
+          onClick={togglePlay}
         >
-          <img src={Play} alt="Play" />
+          <img src={isCurrentPlaying ? Pause : Play} alt="Play/Pause" />
+        </div>
+        <div
+          className="rounded-full bg-green-500 w-10 h-10 flex justify-center items-center cursor-pointer"
+          onClick={toggleFavorites}
+        >
+          <FontAwesomeIcon icon={isFavorited ? faHeart : faHeartCirclePlus} />
         </div>
       </div>
     </div>
