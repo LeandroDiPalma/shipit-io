@@ -5,11 +5,9 @@ import "./index.css";
 import { AudioProvider } from "./utils/audioContext";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <AudioProvider>
-    <React.StrictMode>
-      <div className="w-screen mx-auto h-screen">
-        <Routes />
-      </div>
-    </React.StrictMode>
-  </AudioProvider>
+  <React.StrictMode>
+    <div className="w-screen mx-auto h-screen">
+      <Routes />
+    </div>
+  </React.StrictMode>
 );
