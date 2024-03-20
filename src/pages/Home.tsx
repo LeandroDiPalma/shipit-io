@@ -1,27 +1,9 @@
 import { Card } from "../components/Card";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getEpisodes } from "../api/getEpisodes";
-import { Episode } from "../types/episode";
+import AudioPlayer from "../components/AudioPlayer";
+import { useAudio } from "../utils/audioContext";
 
 const Home = () => {
-  const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const navigate = useNavigate();
-  useEffect(() => {
-    !localStorage.getItem("access_token")
-      ? navigate("/login")
-      : fetchEpisodes();
-  }, []);
-
-  const fetchEpisodes = async () => {
-    try {
-      const data = await getEpisodes();
-      setEpisodes(data);
-    } catch (error) {
-      localStorage.removeItem("access_token");
-      navigate("/login");
-    }
-  };
+  const { episodes } = useAudio();
 
   return (
     <div className="px-4 flex flex-col items-center">
@@ -36,6 +18,7 @@ const Home = () => {
             image={images[1].url}
           />
         ))}
+        <AudioPlayer />
       </div>
     </div>
   );

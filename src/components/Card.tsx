@@ -18,13 +18,7 @@ export const Card = ({ className, name, image, preview_url }: CardProps) => {
   const isCurrentPlaying = currentPlayingUrl === preview_url && isPlaying;
   const isFavorited = favorites.includes(preview_url);
 
-  const togglePlay = () => {
-    play(preview_url);
-  };
-
-  const toggleFavorites = () => {
-    toggleFavorite(preview_url);
-  };
+ 
   return (
     <div
       className={`${className} bg-[#343434] h-24 hover:shadow-md flex cursor-pointer max-w-md`}
@@ -34,13 +28,13 @@ export const Card = ({ className, name, image, preview_url }: CardProps) => {
         <div className="font-bold w-3/4">{name}</div>
         <div
           className="rounded-full bg-green-500 w-10 h-10 flex justify-center items-center cursor-pointer"
-          onClick={togglePlay}
+          onClick={() => play(preview_url)}
         >
           <img src={isCurrentPlaying ? Pause : Play} alt="Play/Pause" />
         </div>
         <div
           className="rounded-full bg-green-500 w-10 h-10 flex justify-center items-center cursor-pointer"
-          onClick={toggleFavorites}
+          onClick={() => toggleFavorite(preview_url)}
         >
           <FontAwesomeIcon icon={isFavorited ? faHeart : faHeartCirclePlus} />
         </div>
